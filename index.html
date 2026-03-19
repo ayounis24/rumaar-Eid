@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RUMAAR Greeting Card</title>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #C9A646;
+      --dark: #121212;
+      --charcoal: #1F1F1F;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: 'Tajawal', 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, var(--dark), var(--charcoal));
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    .lang-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .lang-switch button {
+      background: var(--gold);
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #111;
+    }
+
+    .greeting-box {
+      max-width: 700px;
+      margin: 40px auto 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,166,70,0.3);
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    .greeting-box h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+    }
+
+    .greeting-box p {
+      margin: 0;
+      color: #ddd;
+      line-height: 1.8;
+    }
+
+    .controls {
+      margin: 20px 0;
+    }
+
+    input {
+      padding: 14px;
+      width: 320px;
+      max-width: 90%;
+      border-radius: 12px;
+      border: 1px solid var(--gold);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #cfcfcf;
+    }
+
+    button.download {
+      padding: 14px 20px;
+      margin-top: 10px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      background: var(--gold);
+      color: #111;
+    }
+
+    .card {
+      position: relative;
+      max-width: 800px;
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    .card img {
+      display: block;
+      width: calc(100% + 6px);
+      margin: -3px;
+    }
+
+    .name {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 3px 10px rgba(0,0,0,0.9);
+      width: 80%;
+      text-align: center;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 18px;
+      }
+
+      .lang-switch {
+        position: static;
+        margin-bottom: 16px;
+      }
+
+      .greeting-box {
+        margin-top: 0;
+      }
+
+      .name {
+        font-size: 24px;
+        bottom: 18px;
+        width: 84%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="lang-switch">
+    <button onclick="toggleLang()">EN / عربي</button>
+  </div>
+
+  <div class="greeting-box">
+    <h2 id="title">عيدكم مبارك 🌙</h2>
+    <p id="desc">
+      تتقدم شركة رونق الإعمار بأطيب التهاني والتبريكات لفريق العمل الكريم،
+      سائلين الله أن يعيده عليكم بالصحة والنجاح والتوفيق.
+    </p>
+  </div>
+
+  <div class="controls">
+    <input
+      type="text"
+      id="nameInput"
+      placeholder="اكتب اسمك بالعربي أو الإنجليزي"
+    >
+    <br>
+    <button class="download" onclick="download()" id="downloadBtn">تحميل البطاقة</button>
+  </div>
+
+  <div class="card" id="card">
+    <img src="card.png" alt="RUMAAR Eid Card">
+    <div class="name" id="nameText">اسمك هنا</div>
+  </div>
+
+  <script>
+    let isArabic = true;
+
+    function toggleLang() {
+      isArabic = !isArabic;
+
+      if (!isArabic) {
+        document.documentElement.lang = "en";
+        document.documentElement.dir = "ltr";
+        document.body.style.direction = "ltr";
+
+        document.getElementById("title").textContent = "Eid Mubarak 🌙";
+        document.getElementById("desc").textContent =
+          "RUMAAR Contracting extends its warmest wishes to our valued team, wishing you continued success, health, and prosperity.";
+        document.getElementById("nameInput").placeholder = "Write your name in Arabic or English";
+        document.getElementById("downloadBtn").textContent = "Download Card";
+
+        if (!document.getElementById("nameInput").value.trim()) {
+          document.getElementById("nameText").textContent = "Your Name";
+        }
+      } else {
+        document.documentElement.lang = "ar";
+        document.documentElement.dir = "rtl";
+        document.body.style.direction = "rtl";
+
+        document.getElementById("title").textContent = "عيدكم مبارك 🌙";
+        document.getElementById("desc").textContent =
+          "تتقدم شركة رونق الإعمار بأطيب التهاني والتبريكات لفريق العمل الكريم، سائلين الله أن يعيده عليكم بالصحة والنجاح والتوفيق.";
+        document.getElementById("nameInput").placeholder = "اكتب اسمك بالعربي أو الإنجليزي";
+        document.getElementById("downloadBtn").textContent = "تحميل البطاقة";
+
+        if (!document.getElementById("nameInput").value.trim()) {
+          document.getElementById("nameText").textContent = "اسمك هنا";
+        }
+      }
+    }
+
+    const input = document.getElementById("nameInput");
+    const nameText = document.getElementById("nameText");
+
+    input.addEventListener("input", () => {
+      const value = input.value.trim();
+      nameText.textContent = value || (isArabic ? "اسمك هنا" : "Your Name");
+    });
+
+    function download() {
+      const card = document.getElementById("card");
+
+      html2canvas(card, {
+        useCORS: true,
+        scale: 2,
+        backgroundColor: null
+      }).then(canvas => {
+        const link = document.createElement("a");
+        const enteredName = input.value.trim() || "RUMAAR_Card";
+        link.download = enteredName.replace(/\s+/g, "_") + ".png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+
+</body>
+</html>
