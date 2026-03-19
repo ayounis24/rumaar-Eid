@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RUMAAR Greeting Card</title>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial;
+  text-align: center;
+  background: #111;
+  color: white;
+}
+
+input {
+  padding: 12px;
+  width: 300px;
+  border-radius: 10px;
+  border: 1px solid #C9A646;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  background: #C9A646;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.card {
+  position: relative;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.card img {
+  width: 100%;
+}
+
+.name {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #C9A646;
+  font-size: 32px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h2>عيدكم مبارك 🌙</h2>
+
+<input type="text" id="nameInput" placeholder="اكتب اسمك">
+
+<br>
+
+<button onclick="download()">تحميل البطاقة</button>
+
+<div class="card" id="card">
+  <img src="card.png">
+  <div class="name" id="nameText">اسمك هنا</div>
+</div>
+
+<script>
+const input = document.getElementById("nameInput");
+const nameText = document.getElementById("nameText");
+
+input.addEventListener("input", () => {
+  nameText.textContent = input.value || "اسمك هنا";
+});
+
+function download() {
+  html2canvas(document.getElementById("card")).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "card.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
+
+</body>
+</html>
